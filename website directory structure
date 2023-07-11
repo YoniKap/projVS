@@ -1,0 +1,10 @@
+projVS/
+  |-- website/
+  |     |-- __init__.py
+  |     |-- views.py
+  |     |-- auth.py
+  |     |-- templates/
+  |           |--home.html
+              |--login.html       
+  |     |-- static/ 
+  |-- main.py
