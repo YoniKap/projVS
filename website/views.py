@@ -32,6 +32,31 @@ def electric():
     return render_template("electric.html",data=data)
 
 
+@views.route('/acoustic')
+@login_required
+def acoustic():
+    db =get_mysql_guitars()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM product_catalog.acoustic_guitars;')
+    data = cursor.fetchall()
+    print(data)
+    return render_template("acoustics.html",data=data)
+
+
+
+@views.route('/classical')
+@login_required
+def classical():
+   db =get_mysql_guitars()
+   cursor = db.cursor()
+   cursor.execute('SELECT * FROM product_catalog.classical_guitars;')
+   data = cursor.fetchall()
+    
+   return render_template("classical.html",data=data)
+
+
+
+
 @login_required
 @views.route('/add_electric', methods=['GET', 'POST'])
 def addelectric():
@@ -142,32 +167,6 @@ def addacoustic():
         
     return render_template("addacoustic.html", form=form)
 
-
-
-
-
-
-@views.route('/acoustic')
-@login_required
-def acoustic():
-    db =get_mysql_guitars()
-    cursor = db.cursor()
-    cursor.execute('SELECT * FROM product_catalog.acoustic_guitars;')
-    data = cursor.fetchall()
-    print(data)
-    return render_template("acoustics.html",data=data)
-
-
-
-@views.route('/classical')
-@login_required
-def classical():
-   db =get_mysql_guitars()
-   cursor = db.cursor()
-   cursor.execute('SELECT * FROM product_catalog.classical_guitars;')
-   data = cursor.fetchall()
-    
-   return render_template("classical.html",data=data)
 
 
 @views.route('/bass')
