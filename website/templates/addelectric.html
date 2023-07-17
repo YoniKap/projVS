@@ -58,6 +58,35 @@
     </style>
 </head>
 <body>
+
+    <div style="display: flex; justify-content: flex-start ; justify-content: space-around;">
+        <form method="POST" action="{{ url_for('showemplist') }}">
+        Search By ID: <input type="number" name="id">
+            <input type="submit" value="Search">
+   </form>
+
+
+
+        <form method="POST" action="{{ url_for('showemplist') }}">
+                   Search By Name: <input type="text" name="name">
+   <input type="submit" value="Search" >
+             </form>
+
+             <form method="POST" action="{{ url_for('showemplist') }}">
+                   Delete By ID: <input type="number"  maxlength="12" name="delete">
+   <input type="submit" value="Delete" >
+             </form>
+
+        <form method="POST" action="{{ url_for('showemplist') }}">
+                   Order Jobs By ABC: <input type="submit" value="Order" name="orderbyjob">
+   </form>
+
+
+        <form method="POST" action="{{ url_for('showemplist') }}">
+                   Order By Salary: <input type="submit" value="Order" name="orderbysalary">
+   </form>
+
+   </div>
     <form class="form" action="" method="POST">
         {{ form.csrf_token }}
         <label for="brand">Brand:</label>

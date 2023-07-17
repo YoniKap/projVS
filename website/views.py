@@ -17,10 +17,6 @@ def departments():
     return render_template("departments.html")
 
 
-
-
-
-
 @views.route('/electric')
 @login_required
 def electric():
@@ -53,6 +49,33 @@ def classical():
    data = cursor.fetchall()
     
    return render_template("classical.html",data=data)
+
+
+
+
+@views.route('/bass')
+@login_required
+def bass():
+   db =get_mysql_guitars()
+   cursor = db.cursor()
+   cursor.execute('SELECT * FROM product_catalog.bass_guitars;')
+   data = cursor.fetchall()
+    
+
+   return render_template("bass.html",data=data)
+
+
+
+@views.route('/other')
+@login_required
+def other():
+   db =get_mysql_guitars()
+   cursor = db.cursor()
+   cursor.execute('SELECT * FROM product_catalog.other;')
+   data = cursor.fetchall()
+    
+   return render_template("other.html",data=data)
+
 
 
 
@@ -166,11 +189,4 @@ def addacoustic():
 
         
     return render_template("addacoustic.html", form=form)
-
-
-
-@views.route('/bass')
-@login_required
-def bass():
-    return render_template("bass.html")
 
