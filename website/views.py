@@ -7,6 +7,7 @@ from mysql.connector import Error
 
 
 
+
 views = Blueprint( 'views' , __name__ ) 
 
 
@@ -17,49 +18,208 @@ def departments():
     return render_template("departments.html")
 
 
-@views.route('/electric')
+
+
+
+
+
+@views.route('/electric' , methods=['GET','POST'])
 @login_required
 def electric():
+    basequery='SELECT * FROM product_catalog.electric_guitars;'
     db =get_mysql_guitars()
     cursor = db.cursor()
-    cursor.execute('SELECT * FROM product_catalog.electric_guitars;')
+    cursor.execute(basequery)
     data = cursor.fetchall()
     
-    return render_template("electric.html",data=data)
+    
+    if 'code' in request.form:
+        
+        code = request.form['code']
+        if code.isspace() or code == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.electric_guitars where product_code='{code}'")
+                 data = cursor.fetchall() 
 
 
-@views.route('/acoustic')
+    if 'brand' in request.form:
+        
+        brand = request.form['brand']
+        if brand.isspace() or brand == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.electric_guitars where brand='{brand}'")
+                 data = cursor.fetchall()              
+               
+
+    if 'model' in request.form:
+        
+        model = request.form['model']
+        if model.isspace() or model == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.electric_guitars where model='{model}'")
+                 data = cursor.fetchall() 
+                             
+    
+    return render_template("electric.html", data=data  )
+
+
+
+
+
+
+
+@views.route('/acoustic', methods=['GET','POST'])
 @login_required
 def acoustic():
+    basequery='SELECT * FROM product_catalog.acoustic_guitars;'
     db =get_mysql_guitars()
     cursor = db.cursor()
-    cursor.execute('SELECT * FROM product_catalog.acoustic_guitars;')
+    cursor.execute(basequery)
     data = cursor.fetchall()
-    print(data)
+
+    if 'code' in request.form:
+        
+        code = request.form['code']
+        if code.isspace() or code == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.acoustic_guitars where product_code='{code}'")
+                 data = cursor.fetchall() 
+
+
+    if 'brand' in request.form:
+        
+        brand = request.form['brand']
+        if brand.isspace() or brand == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.acoustic_guitars where brand='{brand}'")
+                 data = cursor.fetchall()              
+               
+
+    if 'model' in request.form:
+        
+        model = request.form['model']
+        if model.isspace() or model == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.acoustic_guitars where model='{model}'")
+                 data = cursor.fetchall() 
+
+
     return render_template("acoustics.html",data=data)
 
 
 
-@views.route('/classical')
+@views.route('/classical', methods=['GET','POST'])
 @login_required
 def classical():
+   basequery='SELECT * FROM product_catalog.classical_guitars;'
    db =get_mysql_guitars()
    cursor = db.cursor()
-   cursor.execute('SELECT * FROM product_catalog.classical_guitars;')
+   cursor.execute(basequery)
    data = cursor.fetchall()
+   if 'code' in request.form:
+        
+        code = request.form['code']
+        if code.isspace() or code == '':
+                 
+                 cursor.execute()
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.classical_guitars where product_code='{code}'")
+                 data = cursor.fetchall() 
+
+   if 'brand' in request.form:
+        
+        brand = request.form['brand']
+        if brand.isspace() or brand == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.classical_guitars where brand='{brand}'")
+                 data = cursor.fetchall()              
+               
+
+   if 'model' in request.form:
+        
+        model = request.form['model']
+        if model.isspace() or model == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.classical_guitars where model='{model}'")
+                 data = cursor.fetchall() 
+ 
     
    return render_template("classical.html",data=data)
 
 
 
 
-@views.route('/bass')
+@views.route('/bass' , methods=['GET','POST'])
 @login_required
 def bass():
+   basequery='SELECT * FROM product_catalog.bass_guitars;'
    db =get_mysql_guitars()
    cursor = db.cursor()
-   cursor.execute('SELECT * FROM product_catalog.bass_guitars;')
+   cursor.execute(basequery)
    data = cursor.fetchall()
+
+   if 'code' in request.form:
+        
+       code = request.form['code']
+       if code.isspace() or code == '':
+                 
+             cursor.execute(basequery)
+        
+       else:
+            cursor.execute(f"SELECT * FROM product_catalog.bass_guitars where product_code='{code}'")
+            data = cursor.fetchall() 
+
+
+
+   if 'brand' in request.form:
+        
+        brand = request.form['brand']
+        if brand.isspace() or brand == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.bass_guitars where brand='{brand}'")
+                 data = cursor.fetchall()              
+               
+
+
+
+   if 'model' in request.form:
+        
+        model = request.form['model']
+        if model.isspace() or model == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.bass_guitars where model='{model}'")
+                 data = cursor.fetchall() 
     
 
    return render_template("bass.html",data=data)

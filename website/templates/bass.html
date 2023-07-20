@@ -35,6 +35,40 @@
 </head>
 <body>
     <h1>Bass Guitars</h1>
+    <div style="display: flex; justify-content: flex-start ; justify-content: space-around;">
+
+
+        <form method="POST" action="{{ url_for('views.bass') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            Search By Product Code: <input type="text" name="code">
+            <input type="submit" value="Search">
+        </form>
+
+
+        <form method="POST" action="{{ url_for('views.bass') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            Search By Brand: <input type="text" name="brand">
+            <input type="submit" value="Search">
+        </form>
+
+          <form method="POST" action="{{ url_for('views.bass') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            Search By Model: <input type="text" name="model">
+            <input type="submit" value="Search">
+        </form>
+
+
+
+        <form method="POST" action="{{ url_for('views.bass') }}">
+                   Order Brands By ABC: <input type="submit" value="Order" name="orderbyjob">
+   </form>
+
+
+        <form method="POST" action="{{ url_for('views.bass') }}">
+                   Order Models By ABC: <input type="submit" value="Order" name="orderbysalary">
+   </form>
+
+   </div>
     <table>
         <thead>
             <tr>
@@ -61,7 +95,10 @@
                 <td>{{ row[2] }}</td>
                 <td>{{ row[3] }}</td>
                 <td>{{ row[4] }}</td>
-                <td>{{ row[5] }}</td>
+                <td>
+                    {% set json_string = row[5]  | replace('{', '') | replace('}', '') | replace('"', '') | replace(',', ' | ') %}
+                    {{ json_string }}
+                </td>
                 <td>{{ row[6] }}</td>
                 <td>{{ row[7] }}</td>
                 <td>{{ row[8] }}</td>
