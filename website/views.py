@@ -1,6 +1,6 @@
 from flask import Blueprint ,render_template , request ,redirect ,url_for
 from flask_login import login_user , login_required , logout_user , current_user
-from website.forms import hm , ElectricGuitarForm
+from website.forms import hm , ElectricGuitarForm ,AcousticGuitarForm, BassGuitarForm ,OtherForm
 from website.dbconnect import get_mysql_guitars
 from website.functions import  Jsonify , generate_code
 from mysql.connector import Error
@@ -226,14 +226,53 @@ def bass():
 
 
 
-@views.route('/other')
+@views.route('/other', methods=['GET', 'POST'])
 @login_required
 def other():
+   basequery='SELECT * FROM product_catalog.other;'
    db =get_mysql_guitars()
    cursor = db.cursor()
-   cursor.execute('SELECT * FROM product_catalog.other;')
+   cursor.execute(basequery)
    data = cursor.fetchall()
-    
+
+
+   if 'code' in request.form:
+        
+       code = request.form['code']
+       if code.isspace() or code == '':
+                 
+             cursor.execute(basequery)
+        
+       else:
+            cursor.execute(f"SELECT * FROM product_catalog.other where product_code='{code}'")
+            data = cursor.fetchall() 
+
+
+
+   if 'brand' in request.form:
+        
+        brand = request.form['brand']
+        if brand.isspace() or brand == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.other where brand='{brand}'")
+                 data = cursor.fetchall()              
+               
+
+
+
+   if 'prod' in request.form:
+        
+        prod = request.form['prod']
+        if prod.isspace() or prod == '':
+                 
+                 cursor.execute(basequery)
+        
+        else:
+                 cursor.execute(f"SELECT * FROM product_catalog.other where type_='{prod}'")
+                 data = cursor.fetchall() 
    return render_template("other.html",data=data)
 
 
@@ -249,7 +288,7 @@ def addelectric():
     except:
        return render_template("databasefail.html")
 
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST' :
        
 
         cursor = db.cursor()
@@ -270,7 +309,9 @@ def addelectric():
         print(brand, model, shape, top, body, neck,fretboard ,frets, strings,pickupnum,pickuptype, bridge, price)
 
         woods=Jsonify(top, body, neck, fretboard)
-        code= generate_code()
+        code=generate_code()
+        print(form)
+        print(brand ,model,shape,top,body,neck,fretboard,frets,strings,pickupnum,pickuptype,bridge,price)
 
 
         query = '''INSERT INTO product_catalog.electric_guitars
@@ -279,10 +320,14 @@ def addelectric():
             
             
                 
-        cursor.execute(query)
-        db.commit()
-        db.close() 
-        return "Guitar successfully added to the database"
+        try:        
+           cursor.execute(query)
+           db.commit()
+           db.close() 
+           return "Guitar successfully added to the database"
+        
+        except:
+           return "Database Error"
     
         
         
@@ -300,13 +345,13 @@ def addelectric():
 @login_required
 @views.route('/add_acoustic', methods=['GET', 'POST'])
 def addacoustic():
-    form = ElectricGuitarForm()
+    form = AcousticGuitarForm()
     try:
        db = get_mysql_guitars() 
     except:
        return render_template("databasefail.html")
 
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST' :
        
 
         cursor = db.cursor()
@@ -322,24 +367,29 @@ def addacoustic():
         strings = request.form.get('strings')
         pickupnum = request.form.get('pickupnum')
         pickuptype = request.form.get('pickuptype')
-        bridge = request.form.get('bridge')
         price = request.form.get('price')
-        print(brand, model, shape, top, body, neck,fretboard ,frets, strings,pickupnum,pickuptype, bridge, price)
+        print(brand, model, shape, top, body, neck,fretboard ,frets, strings,pickupnum,pickuptype, price)
 
         woods=Jsonify(top, body, neck, fretboard)
         code= generate_code()
 
 
         query = '''INSERT INTO product_catalog.acoustic_guitars
-                   (product_code, brand, model, neck_shape, woods, num_of_frets, num_of_strings, num_of_pickups, pickup_type, bridge_type, price, in_stock)
+                   (product_code, brand, model, neck_shape, woods, num_of_frets, num_of_strings, num_of_pickups, pickup_type, price, in_stock)
                    VALUES ('{}', '{}', '{}', '{}', '{}', {}, {}, {}, '{}',  {}, 0);'''.format(code, brand, model, shape, woods, frets, strings, pickupnum, pickuptype, price)
             
         print(query)    
-                
-        cursor.execute(query)
-        db.commit()
-        db.close() 
-        return "Guitar successfully added to the database"
+
+        try:        
+           cursor.execute(query)
+           db.commit()
+           db.close() 
+           return "Guitar successfully added to the database"
+        
+        except:
+           return "Database Error"
+    
+          
     
         
         
@@ -350,3 +400,143 @@ def addacoustic():
         
     return render_template("addacoustic.html", form=form)
 
+
+
+@login_required
+@views.route('/add_classical', methods=['GET', 'POST'])
+def add_classical():
+    form = AcousticGuitarForm()
+    try:
+       db = get_mysql_guitars() 
+    except:
+       return render_template("databasefail.html")
+
+    if request.method == 'POST' :
+       
+
+        cursor = db.cursor()
+
+        brand = request.form.get('brand')
+        model = request.form.get('model')
+        shape = request.form.get('shape')
+        top = request.form.get('top')
+        body = request.form.get('body')
+        neck = request.form.get('neck')
+        fretboard = request.form.get('fretboard')
+        frets = request.form.get('frets')
+        strings = request.form.get('strings')
+        pickupnum = request.form.get('pickupnum')
+        pickuptype = request.form.get('pickuptype')
+        price = request.form.get('price')
+        print(brand, model, shape, top, body, neck,fretboard ,frets, strings,pickupnum,pickuptype, price)
+
+        woods=Jsonify(top, body, neck, fretboard)
+        code= generate_code()
+
+
+        query = '''INSERT INTO product_catalog.classical_guitars
+                   (product_code, brand, model, neck_shape, woods, num_of_frets, num_of_strings, num_of_pickups, pickup_type, price, in_stock)
+                   VALUES ('{}', '{}', '{}', '{}', '{}', {}, {}, {}, '{}',  {}, 0);'''.format(code, brand, model, shape, woods, frets, strings, pickupnum, pickuptype, price)
+            
+        print(query)    
+
+        try:        
+           cursor.execute(query)
+           db.commit()
+           db.close() 
+           return "Guitar successfully added to the database"
+        
+        except:
+           return "Database Error"
+        
+
+    return render_template("addclassical.html", form=form)
+
+@login_required
+@views.route('/add_bass', methods=['GET', 'POST'])
+def addBass():
+    form = BassGuitarForm()
+    try:
+       db = get_mysql_guitars() 
+    except:
+       return render_template("databasefail.html")
+
+    if request.method == 'POST' :
+       
+
+        cursor = db.cursor()
+        brand = request.form.get('brand')
+        model = request.form.get('model')
+        type = request.form.get('type')
+        shape = request.form.get('shape')
+        top = request.form.get('top')
+        body = request.form.get('body')
+        neck = request.form.get('neck')
+        fretboard = request.form.get('fretboard')
+        frets = request.form.get('frets')
+        strings = request.form.get('strings')
+        pickupnum = request.form.get('pickupnum')
+        pickuptype = request.form.get('pickuptype')
+        price = request.form.get('price')
+        print(brand, model, shape, top, body, neck,fretboard ,frets, strings,pickupnum,pickuptype, price)
+
+        woods=Jsonify(top, body, neck, fretboard)
+        code= generate_code()
+
+
+        query = '''INSERT INTO product_catalog.bass_guitars
+                   (product_code, brand, model, type_ , neck_shape, woods, num_of_frets, num_of_strings, num_of_pickups, pickup_type, price, in_stock)
+                   VALUES ('{}', '{}', '{}', '{}', '{}', '{}', {}, {}, {},  '{}', {} , 0);'''.format(code, brand, model, type, shape, woods, frets, strings, pickupnum, pickuptype, price)
+            
+        print(query)    
+
+        try:        
+           cursor.execute(query)
+           db.commit()
+           db.close() 
+           return "Guitar successfully added to the database"
+        
+        except:
+           return "Database Error"
+        
+
+    return render_template("addbass.html", form=form)
+
+
+@login_required
+@views.route('/add_other', methods=['GET', 'POST'])
+def addother():
+    form = OtherForm()
+    try:
+       db = get_mysql_guitars() 
+    except:
+       return render_template("databasefail.html")
+
+    if request.method == 'POST' :
+       
+
+        cursor = db.cursor()
+        brand = request.form.get('brand')
+        model = request.form.get('model')
+        type = request.form.get('type')
+        price = request.form.get('price')
+        print(brand, model, price)
+        code= generate_code()
+
+
+        query = '''INSERT INTO `product_catalog`.`other` (`product_code`, `brand`, `model`, `type_`, `price`, `in_stock`)
+          VALUES ('{}', '{}', '{}', '{}', '{}', '0');'''.format(code, brand, model,type, price)
+            
+        print(query)    
+
+        try:        
+           cursor.execute(query)
+           db.commit()
+           db.close() 
+           return "Guitar successfully added to the database"
+        
+        except:
+           return "Database Error"
+        
+
+    return render_template("addother.html", form=form)

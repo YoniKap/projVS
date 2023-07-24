@@ -58,6 +58,8 @@
     </style>
 </head>
 <body>
+
+    
     <form class="form" action="" method="POST">
         {{ form.csrf_token }}
         <label for="brand">Brand:</label>
@@ -65,7 +67,15 @@
         
         <label for="model">Model:</label>
         <input type="text" id="model" name="model" required aria-required="true">
-        
+
+
+        <label for="type">Type:</label>
+        <select id="type" name="type" required>
+            <option value="Electric">Electric</option>
+            <option value="Acoustic">Acoustic</option>
+        </select>
+
+
         <label for="neck-shape">Neck Shape:</label>
         <select id="shape" name="shape" required>
             <option value="C">C Shape</option>
@@ -91,9 +101,6 @@
         
         <label for="strings">Number of Strings:</label>
         <input type="number" id="strings" name="strings" required aria-required="true" >
-        
-        <label for="bridge">Bridge Type:</label>
-        <input type="text" id="bridge" name="bridge" required aria-required="true">
 
         <label for="pickupnum">Number Of Pickups:</label>
         <input type="number" id="pickupnum" name="pickupnum" required aria-required="true">

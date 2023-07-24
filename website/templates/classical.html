@@ -57,15 +57,9 @@
             <input type="submit" value="Search">
         </form>
 
+        <button class="button" onclick="window.location.href = '/add_classical';">Add Guitar</button>
+        <button class="button" onclick="window.location.href = '/departments';">Departments Page</button>
 
-
-        <form method="POST" action="{{ url_for('views.classical') }}">
-                   Order Brands By ABC: <input type="submit" value="Order" name="orderbyjob">
-   </form>
-
-
-        <form method="POST" action="{{ url_for('views.classical') }}">
-                   Order Models By ABC: <input type="submit" value="Order" name="orderbysalary">
    </form>
 
    </div>
