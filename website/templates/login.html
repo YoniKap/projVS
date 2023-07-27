@@ -52,12 +52,17 @@
             border-radius: 3px;
             cursor: pointer;
         }
+        .minicon{
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <h1>Yons Guitars Management App</h1>
         <h1>Login</h1>
         <form  method="POST">
+            
             {{ form.csrf_token }}
             <div class="form-group">
                 <input type="text" name="username" placeholder="Username" class="form-control">
@@ -72,6 +77,12 @@
                 <div class="error">{{ form.errors }}</div>
             {% endif %}
         </form>
+          <div class="minicon">
+           <h8>for additional information or account creation please conatct</h8>
+           <h8>email: yonikas123@gmail.com</h8>
+          </div>
     </div>
+    
+ 
 </body>
 </html>

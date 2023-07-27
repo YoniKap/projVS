@@ -1,5 +1,5 @@
 # Use the official Python image as the base image
-FROM python:3.9
+FROM python:3.9-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -17,3 +17,7 @@ EXPOSE 5000
 
 # Define the command to run the Flask app when the container starts
 CMD ["python", "main.py"]
+
+
+RUN pip install --no-cache-dir -r requirements.txt
+

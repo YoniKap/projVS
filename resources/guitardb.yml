@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: guitar-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guitar-db
+  template:
+    metadata:
+      labels:
+        app: guitar-db
+    spec:
+      containers:
+        - name: guitar-db
+          image: yonatankaplounov/guitardb:final
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "yon133"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: guitar-db-service
+spec:
+  selector:
+    app: flask-app
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306

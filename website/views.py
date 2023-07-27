@@ -15,10 +15,12 @@ views = Blueprint( 'views' , __name__ )
 @views.route('/departments', methods=['GET','POST'])
 @login_required
 def departments():
+    try:
+       db = get_mysql_guitars() 
+    except:
+       return render_template("databasefail.html") 
+
     return render_template("departments.html")
-
-
-
 
 
 
@@ -26,6 +28,11 @@ def departments():
 @views.route('/electric' , methods=['GET','POST'])
 @login_required
 def electric():
+    try:
+       db = get_mysql_guitars() 
+    except:
+       return render_template("databasefail.html")
+    
     basequery='SELECT * FROM product_catalog.electric_guitars;'
     db =get_mysql_guitars()
     cursor = db.cursor()
@@ -67,6 +74,22 @@ def electric():
         else:
                  cursor.execute(f"SELECT * FROM product_catalog.electric_guitars where model='{model}'")
                  data = cursor.fetchall() 
+
+
+    if 'remove' in request.form:
+        
+        remove = request.form['remove']
+        if remove.isspace() or remove == '':
+                 cursor.execute(basequery)
+                  
+        else:
+                try:
+                 cursor.execute(f"DELETE FROM `product_catalog`.`electric_guitars` WHERE (`product_code` = '{remove}');")
+                 data =  db.commit()
+                 return render_template("electricdel.html")
+                except: 
+                     return  "Error"
+
                              
     
     return render_template("electric.html", data=data  )
@@ -80,6 +103,11 @@ def electric():
 @views.route('/acoustic', methods=['GET','POST'])
 @login_required
 def acoustic():
+    try:
+       db = get_mysql_guitars() 
+    except:
+       return render_template("databasefail.html")
+     
     basequery='SELECT * FROM product_catalog.acoustic_guitars;'
     db =get_mysql_guitars()
     cursor = db.cursor()
@@ -120,7 +148,20 @@ def acoustic():
         else:
                  cursor.execute(f"SELECT * FROM product_catalog.acoustic_guitars where model='{model}'")
                  data = cursor.fetchall() 
-
+    if 'remove' in request.form:
+        
+        remove = request.form['remove']
+        if remove.isspace() or remove == '':
+                 cursor.execute(basequery)
+                  
+        else:
+                try:
+                 cursor.execute(f"DELETE FROM `product_catalog`.`acoustic_guitars` WHERE (`product_code` = '{remove}');")
+                 data =  db.commit()
+                 return render_template("acousticdel.html")
+                except: 
+                     return  "Error"
+    
 
     return render_template("acoustics.html",data=data)
 
@@ -129,6 +170,13 @@ def acoustic():
 @views.route('/classical', methods=['GET','POST'])
 @login_required
 def classical():
+
+
+   try:
+       db = get_mysql_guitars() 
+   except:
+       return render_template("databasefail.html")
+    
    basequery='SELECT * FROM product_catalog.classical_guitars;'
    db =get_mysql_guitars()
    cursor = db.cursor()
@@ -167,7 +215,20 @@ def classical():
         else:
                  cursor.execute(f"SELECT * FROM product_catalog.classical_guitars where model='{model}'")
                  data = cursor.fetchall() 
- 
+   if 'remove' in request.form:
+        
+        remove = request.form['remove']
+        if remove.isspace() or remove == '':
+                 cursor.execute(basequery)
+                  
+        else:
+                try:
+                 cursor.execute(f"DELETE FROM `product_catalog`.`classical_guitars` WHERE (`product_code` = '{remove}');")
+                 data =  db.commit()
+                 return render_template("classicaldel.html")
+                except: 
+                     return  "Error"
+
     
    return render_template("classical.html",data=data)
 
@@ -177,6 +238,13 @@ def classical():
 @views.route('/bass' , methods=['GET','POST'])
 @login_required
 def bass():
+
+   try:
+       db = get_mysql_guitars() 
+   except:
+       return render_template("databasefail.html")
+   
+
    basequery='SELECT * FROM product_catalog.bass_guitars;'
    db =get_mysql_guitars()
    cursor = db.cursor()
@@ -220,7 +288,20 @@ def bass():
         else:
                  cursor.execute(f"SELECT * FROM product_catalog.bass_guitars where model='{model}'")
                  data = cursor.fetchall() 
-    
+   if 'remove' in request.form:
+        
+        remove = request.form['remove']
+        if remove.isspace() or remove == '':
+                 cursor.execute(basequery)
+                  
+        else:
+                try:
+                 cursor.execute(f"DELETE FROM `product_catalog`.`bass_guitars` WHERE (`product_code` = '{remove}');")
+                 data =  db.commit()
+                 return render_template("bassdel.html")
+                except: 
+                     return  "Error"
+ 
 
    return render_template("bass.html",data=data)
 
@@ -229,6 +310,12 @@ def bass():
 @views.route('/other', methods=['GET', 'POST'])
 @login_required
 def other():
+
+   try:
+       db = get_mysql_guitars() 
+   except:
+       return render_template("databasefail.html")
+
    basequery='SELECT * FROM product_catalog.other;'
    db =get_mysql_guitars()
    cursor = db.cursor()
@@ -273,14 +360,31 @@ def other():
         else:
                  cursor.execute(f"SELECT * FROM product_catalog.other where type_='{prod}'")
                  data = cursor.fetchall() 
+
+   if 'remove' in request.form:
+        
+        remove = request.form['remove']
+        if remove.isspace() or remove == '':
+                 cursor.execute(basequery)
+                  
+        else:
+                try:
+                 cursor.execute(f"DELETE FROM `product_catalog`.`other` WHERE (`product_code` = '{remove}');")
+                 data =  db.commit()
+                 return render_template("otherdel.html")
+                except: 
+                     return  "Error"
+
+
    return render_template("other.html",data=data)
 
 
 
 
 
-@login_required
+
 @views.route('/add_electric', methods=['GET', 'POST'])
+@login_required
 def addelectric():
     form = ElectricGuitarForm()
     try:
@@ -324,8 +428,7 @@ def addelectric():
            cursor.execute(query)
            db.commit()
            db.close() 
-           return "Guitar successfully added to the database"
-        
+           return redirect('/electric')
         except:
            return "Database Error"
     
@@ -342,8 +445,9 @@ def addelectric():
 
 
 
-@login_required
+
 @views.route('/add_acoustic', methods=['GET', 'POST'])
+@login_required
 def addacoustic():
     form = AcousticGuitarForm()
     try:
@@ -384,7 +488,7 @@ def addacoustic():
            cursor.execute(query)
            db.commit()
            db.close() 
-           return "Guitar successfully added to the database"
+           return redirect('/acoustic')
         
         except:
            return "Database Error"
@@ -402,8 +506,9 @@ def addacoustic():
 
 
 
-@login_required
+
 @views.route('/add_classical', methods=['GET', 'POST'])
+@login_required
 def add_classical():
     form = AcousticGuitarForm()
     try:
@@ -444,7 +549,7 @@ def add_classical():
            cursor.execute(query)
            db.commit()
            db.close() 
-           return "Guitar successfully added to the database"
+           return redirect('/classical')
         
         except:
            return "Database Error"
@@ -452,8 +557,8 @@ def add_classical():
 
     return render_template("addclassical.html", form=form)
 
-@login_required
 @views.route('/add_bass', methods=['GET', 'POST'])
+@login_required
 def addBass():
     form = BassGuitarForm()
     try:
@@ -494,8 +599,7 @@ def addBass():
            cursor.execute(query)
            db.commit()
            db.close() 
-           return "Guitar successfully added to the database"
-        
+           return redirect('/bass')
         except:
            return "Database Error"
         
@@ -503,8 +607,9 @@ def addBass():
     return render_template("addbass.html", form=form)
 
 
-@login_required
+
 @views.route('/add_other', methods=['GET', 'POST'])
+@login_required
 def addother():
     form = OtherForm()
     try:
@@ -533,10 +638,13 @@ def addother():
            cursor.execute(query)
            db.commit()
            db.close() 
-           return "Guitar successfully added to the database"
+           return redirect('/other')
         
         except:
            return "Database Error"
         
 
     return render_template("addother.html", form=form)
+
+
+

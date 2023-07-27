@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-db
+  template:
+    metadata:
+      labels:
+        app: auth-db
+    spec:
+      containers:
+        - name: auth-db
+          image: yonatankaplounov/empdb:final
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "yon133"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-db-service
+spec:
+  selector:
+    app: flask-app
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306

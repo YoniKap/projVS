@@ -39,18 +39,34 @@
         h1{
             text-align: center;
         }
+        .logout {
+            display: block;
+            width: 800px;
+            height: 150px;
+            margin: 10px;
+            padding: 20px;
+            background-color: #6a1d13;
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
    <div class="top">
        <h1>Departments</h1>
     <div class="container">
-        
+         
         <button class="button" onclick="window.location.href = '/electric';">Electric Guitars</button>
         <button class="button" onclick="window.location.href = '/acoustic';">Acoustic Guitars</button>
         <button class="button" onclick="window.location.href = '/bass';">Bass Guitars</button>
         <button class="button" onclick="window.location.href = '/classical';">Classical Guitars</button>
         <button class="button" onclick="window.location.href = '/other';">Other Products</button>
+        <button class="logout" onclick="window.location.href = '/logout';">Log Out</button>
     
     </div>
 </div>

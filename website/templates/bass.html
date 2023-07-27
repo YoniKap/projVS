@@ -56,8 +56,11 @@
             Search By Model: <input type="text" name="model">
             <input type="submit" value="Search">
         </form>
-
-
+        <form method="POST" action="{{ url_for('views.bass') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            Remove By Product Code: <input type="text" name="remove">
+            <input type="submit" value="Remove">
+        </form>
 
         <button class="button" onclick="window.location.href = '/add_bass';">Add Guitar</button>
         <button class="button" onclick="window.location.href = '/departments';">Departments Page</button>
@@ -77,8 +80,7 @@
                 <th>Pickup Number</th>
                 <th>Pickup Type</th>
                 <th>Price</th>
-                <th>In Stock</th>
-                <th>        </th>
+                
             </tr>
         </thead>
         <tbody>
@@ -98,8 +100,7 @@
                 <td>{{ row[8] }}</td>
                 <td>{{ row[9] }}</td>
                 <td>{{ row[10] }}</td>
-                <td>{{ "Yes" if row[11] == 1 else "No" }}</td>
-                <td><button calss="bt">Edit</button></td>
+               
                 
             </tr>
             {% endfor %}
