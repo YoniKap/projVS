@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: auth-db-deployment
 spec:
   replicas: 1
+  serviceName: auth-db-statefulset   
   selector:
     matchLabels:
       app: auth-db
@@ -22,11 +23,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-db-service
+  name: auth-db-service-lb
 spec:
   selector:
-    app: flask-app
+    app: auth-db              
   ports:
     - protocol: TCP
       port: 3306
       targetPort: 3306
+  type: LoadBalancer           

@@ -25,7 +25,7 @@ metadata:
   name: guitar-db-service
 spec:
   selector:
-    app: flask-app
+    app: guitar-db
   ports:
     - protocol: TCP
       port: 3306

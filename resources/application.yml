@@ -15,11 +15,9 @@ spec:
       containers:
         - name: flask-app
           image: yonatankaplounov/application:final
-          ports:
-            - containerPort: 80
           env:
             - name: USERHOST
-              value: "auth_db"
+              value: auth-db-service-lb.default.svc.cluster.local
             - name: USERUSER
               value: "root"
             - name: USERPASS
@@ -29,7 +27,7 @@ spec:
             - name: USERPORT
               value: "3306"
             - name: GUITARHOST
-              value: "guitar_db"
+              value: "guitar-db-service.default.svc.cluster.local"
             - name: GUITARUSER
               value: "root"
             - name: GUITARPASS
