@@ -18,7 +18,7 @@ services:
         ipv4_address: 172.30.0.2
   
     environment:
-      USERHOST: '172.30.0.4'
+      USERHOST: '172.30.0.3'
       USERUSER: 'root'
       USERPASS: 'yon133'
       USERDB: 'users'
@@ -30,7 +30,7 @@ services:
       GUITARPORT: '3306'
 
   guitar_db:
-    image: yonatankaplounov/guitardb:final
+    image: yonatankaplounov/database:final
     restart: always
     networks:
       my_custom_network:
@@ -38,12 +38,4 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: yon133
 
-  auth_db:
-    image:  yonatankaplounov/empdb:final 
-    restart: always
-    networks:
-      my_custom_network:
-        ipv4_address: 172.30.0.4
-    environment:
-      MYSQL_ROOT_PASSWORD: yon133    
-    
+  
