@@ -1,5 +1,0 @@
-#!/bin/zsh
-kdelf application.yaml 
-kdelf authdb.yml
-kdelf guitardb.yml
-

@@ -14,28 +14,17 @@ spec:
     spec:
       containers:
         - name: flask-app
-          image: yonatankaplounov/application:final
-          env:
-            - name: USERHOST
-              value: auth-db-service-lb.default.svc.cluster.local
-            - name: USERUSER
-              value: "root"
-            - name: USERPASS
-              value: "yon133"
-            - name: USERDB
-              value: "users"
-            - name: USERPORT
-              value: "3306"
-            - name: GUITARHOST
-              value: "guitar-db-service.default.svc.cluster.local"
-            - name: GUITARUSER
-              value: "root"
-            - name: GUITARPASS
-              value: "yon133"
-            - name: GUITARDB
-              value: "product_catalog"
-            - name: GUITARPORT
-              value: "3306"
+          image: yonatankaplounov/application:latest
+          envFrom:                              # Use 'envFrom' to import all Secret data as environment variables
+            - secretRef:
+                name: app-secrets
+          # resources: 
+          #   limits:
+          #     cpu: "0.5" 
+          #     memory: "1" 
+          #   requests:
+          #     cpu: "0.5" 
+          #     memory: "1"                     
 ---
 apiVersion: v1
 kind: Service
