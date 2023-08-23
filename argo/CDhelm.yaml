@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guitar
+spec:
+  destination:
+    name: ''
+    namespace: application
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: helm-chart/application
+    repoURL: 'https://github.com/YoniKap/projVS'
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values.yaml
+      values: ''
+  project: default
