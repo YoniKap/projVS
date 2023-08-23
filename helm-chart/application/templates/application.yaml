@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.app.name}}
+  namespace: {{.Values.namespace}}
+spec:
+  replicas: {{.Values.app.replicas}}
+  strategy:
+    type: {{.Values.app.strategy.type}}
+    rollingUpdate:
+      maxSurge: {{.Values.app.strategy.rollingUpdate.maxSurge}}
+      maxUnavailable: {{.Values.app.strategy.rollingUpdate.maxUnavailable}}
+  selector:
+    matchLabels:
+      app: {{.Values.app.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.app.name}}
+    spec:
+      containers:
+        - name: {{.Values.app.name}}
+          image: "{{.Values.appimage.name}}:{{.Values.appimage.tag}}"   
+          imagePullPolicy: {{.Values.app.imagePullPolicy}}
+          envFrom:
+            - secretRef:
+                name: {{.Values.secretName}}
+          resources:
+            limits:
+              cpu: {{.Values.app.limits.cpu}}
+              memory: {{.Values.app.limits.memory}}
+            requests:
+              cpu: {{.Values.app.requests.cpu}}
+              memory: {{.Values.app.requests.memory}}
+

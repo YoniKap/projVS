@@ -11,7 +11,7 @@ spec:
     path: resources
     repoURL: 'https://github.com/YoniKap/projVS'
     targetRevision: HEAD
-  sources: []
+  
   project: default
   syncPolicy:
     automated:

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: databases
+  namespace: {{.Values.namespace}}
+spec:
+  replicas: {{.Values.database.replicas}}
+  serviceName: {{.Values.database.name}}
+  selector:
+    matchLabels:
+      app: {{.Values.database.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.database.name}}
+    spec:
+      containers:
+        - name: {{.Values.database.name}}
+          image: "{{.Values.dbimage.name}}:{{.Values.dbimage.tag}}"     
+          env:
+             - name: MYSQL_ROOT_PASSWORD
+               valueFrom:
+                secretKeyRef:
+                  name: {{.Values.secretName}} 
+                  key: GUITARPASS  
+          resources:
+            limits:
+              cpu: {{.Values.database.limits.cpu}}
+              memory: {{.Values.database.limits.memory}}
+            requests:
+              cpu: {{.Values.database.requests.cpu}}
+              memory: {{.Values.database.requests.memory}}
+              
+          volumeMounts:
+            - name: {{.Values.database.storageName}}
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: {{.Values.database.storageName}}
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: {{.Values.database.storageVolume}}
+    

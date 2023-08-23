@@ -1,0 +1,63 @@
+namespace: application
+
+
+app:
+  name: flask-app
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+  limits:
+    cpu: "0.5"
+    memory: "1Gi"
+  requests:
+    cpu: "0.1"
+    memory: "256Mi"
+  imagePullPolicy: Always
+  
+appservicetype: NodePort 
+
+appimage:
+   name: yonatankaplounov/application
+   tag: final
+  
+
+
+
+database:
+  name: databases-db
+  replicas: 2
+  limits:
+    cpu: "0.5"
+    memory: "1Gi"
+  requests:
+    cpu: "0.1"
+    memory: "256Mi" 
+  imagePullPolicy: Always
+  storageName: mysql-guitrapp-persistent-storage
+  storageVolume: 1Gi       
+
+
+dbservicetype: ClusterIP
+
+
+
+dbimage:
+   name:  yonatankaplounov/appdatabase
+   tag: final
+
+secretName: app-secrets
+
+secrets:
+  USERHOST:    ZGF0YWJhc2VzLXNlcnZpY2UuYXBwbGljYXRpb24uc3ZjLmNsdXN0ZXIubG9jYWw=
+  USERUSER:    cm9vdA==
+  USERPASS:    eW9uMTMz
+  USERDB:      dXNlcnM=
+  USERPORT:    MzMwNg==
+  GUITARHOST:  ZGF0YWJhc2VzLXNlcnZpY2UuYXBwbGljYXRpb24uc3ZjLmNsdXN0ZXIubG9jYWw=
+  GUITARUSER:  cm9vdA==
+  GUITARPASS:  eW9uMTMz
+  GUITARDB:    cHJvZHVjdF9jYXRhbG9n
+  GUITARPORT:  MzMwNg==
