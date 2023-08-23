@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guitars
+spec:
+  destination:
+    name: ''
+    namespace: application
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: resources
+    repoURL: 'https://github.com/YoniKap/projVS'
+    targetRevision: HEAD
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
