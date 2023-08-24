@@ -3,3 +3,9 @@ User-DB-Build
 docker-compose.yml
 __pycache__
 resources
+argo
+text
+General-DB
+helm-chart
+requirements.txt
+Dockerfile 
