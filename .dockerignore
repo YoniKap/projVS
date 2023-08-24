@@ -7,5 +7,4 @@ argo
 text
 General-DB
 helm-chart
-requirements.txt
 Dockerfile 
