@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: guitar
+  name: guitaas
 spec:
   destination:
     name: ''
@@ -12,7 +12,19 @@ spec:
     repoURL: 'https://github.com/YoniKap/projVS'
     targetRevision: HEAD
     helm:
-      valueFiles:
-        - values.yaml
       values: ''
+      parameters:
+        - name: app.imagePullPolicy
+          value: Always
+        - name: app.limits.cpu
+          value: '0.5'
+        - name: appimage.tag
+          value: 33b90fe
   project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - ApplyOutOfSyncOnly=true
+      - CreateNamespace=true
