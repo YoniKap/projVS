@@ -1,0 +1,38 @@
+networks:
+  my_custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+
+version: '3.9'
+services:
+  flask_app:
+   image: yonatankaplounov/database:latest
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    networks:
+      my_custom_network:
+        ipv4_address: 172.30.0.2
+  
+    environment:
+      USERHOST: '172.30.0.3'
+      USERUSER: 'root'
+      USERPASS: 'yon133'
+      USERDB: 'users'
+      USERPORT: '3306'
+      GUITARHOST: '172.30.0.3'
+      GUITARUSER: 'root'
+      GUITARPASS: 'yon133'
+      GUITARDB: 'product_catalog'
+      GUITARPORT: '3306'
+
+  guitar_db:
+    image: yonatankaplounov/database:final
+    restart: always
+    networks:
+      my_custom_network:
+        ipv4_address: 172.30.0.3
+    environment:
+      MYSQL_ROOT_PASSWORD: yon133
