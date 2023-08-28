@@ -19,7 +19,7 @@ spec:
         - name: app.limits.cpu
           value: '0.5'
         - name: appimage.tag
-          value: 33b90fe
+          value: 3388ead
   project: default
   syncPolicy:
     automated:
