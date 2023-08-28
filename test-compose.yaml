@@ -8,7 +8,7 @@ networks:
 version: '3.9'
 services:
   flask_app:
-   image: yonatankaplounov/database:latest
+    image: yonatankaplounov/database:latest
     ports:
       - "5000:80"
     networks:
