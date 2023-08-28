@@ -8,3 +8,4 @@ text
 General-DB
 helm-chart
 Dockerfile 
+tests.py
