@@ -14,6 +14,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: test-app
+      run: python test.py    
+        
     - name: docker-login
       env:
         DOCKER_USER: ${{secrets.DOCKER_USER}}
