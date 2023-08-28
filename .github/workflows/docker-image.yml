@@ -36,7 +36,7 @@ jobs:
            && docker build . --file Dockerfile --tag yonatankaplounov/application:latest
            
     - name: test compose
-      run: docker-compose -f docker-compose2.yaml up -d
+      run: docker-compose -f test-compose.yaml up -d
       
     - name: Push Image Into Repo
       run: docker push yonatankaplounov/application:${{ steps.commit_sha.outputs.SHA_SHORT }}
