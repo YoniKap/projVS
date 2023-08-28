@@ -9,7 +9,6 @@ version: '3.9'
 services:
   flask_app:
    image: yonatankaplounov/database:latest
-      dockerfile: Dockerfile
     ports:
       - "5000:80"
     networks:
