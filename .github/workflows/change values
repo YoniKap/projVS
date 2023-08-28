@@ -1,0 +1,29 @@
+name: Update Helm Values
+
+on:
+  push:
+    branches:
+      - main  # Replace with your branch name
+
+jobs:
+  update-values:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Update Helm Values
+        run: |
+          sed -i 's/:\n  tag: .*/appimage:\n  tag: ${{ github.sha }}/' helm-chart/values.yaml
+          git add path/to/argocd-directory/values.yaml
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Update image tag to ${{ github.sha }}" || true
+
+          # Push the changes only if there's a commit to push
+          if [ -n "$(git status --porcelain)" ]; then
+            git push origin HEAD
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
