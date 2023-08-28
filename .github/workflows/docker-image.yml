@@ -16,7 +16,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: test-app
-      run: python test.py    
+      run: python tests.py    
         
     - name: docker-login
       env:
