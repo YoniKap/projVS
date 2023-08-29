@@ -2,10 +2,12 @@ from flask import Flask ,request , render_template
 from flask_wtf import CSRFProtect
 from website.forms import LoginForm
 from flask_login import LoginManager
+from prometheus_client import Counter, generate_latest
 import os
 
 app = Flask(__name__, template_folder="website/templates")
 
+requests_counter = Counter('http_requests_total', 'Total HTTP Requests')
 
 csrf = CSRFProtect(app)
 
