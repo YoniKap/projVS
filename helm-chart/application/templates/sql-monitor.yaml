@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: mysqld-exporter
+  namespace: prometheus
+  labels:
+    app.kubernetes.io/instance: mysql-exporter
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: prometheus-mysql-exporter
+    app.kubernetes.io/version: v0.15.0
+    helm.sh/chart: prometheus-mysql-exporter-2.0.0
+    release: prom
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: mysql-exporter
+  endpoints:
+    - port: mysql-exporter
