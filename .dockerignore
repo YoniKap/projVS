@@ -4,9 +4,9 @@ docker-compose.yml
 __pycache__
 resources
 argo
-text
 General-DB
 helm-chart
 Dockerfile 
 tests.py
 prometheus
+test-compose.yaml
