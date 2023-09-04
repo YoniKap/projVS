@@ -49,31 +49,5 @@ jobs:
       run: docker push yonatankaplounov/application:${{ steps.commit_sha.outputs.SHA_SHORT }}
            && docker push yonatankaplounov/application:latest
 
-    - name: Get Previous Commit SHA
-      id: previous_commit_sha
-      run: |
-        git fetch --depth=2 origin +refs/heads/main:refs/remotes/origin/main
-        PREVIOUS_COMMIT_SHA=$(git rev-parse origin/main^)
-        echo "::set-output name=PREVIOUS_COMMIT_SHA::$PREVIOUS_COMMIT_SHA"
-       
-
-    - name: Update Manifest File
-      run: |
-        COMMIT_SHA=$(git rev-parse --short HEAD)
-        sed -i "s/latest/$COMMIT_SHA/g" ./resources/application.yaml
-      working-directory: ${{ github.workspace }}
-
-    - name: Commit and Push Changes
-      env:
-        GH_PAT: ${{ secrets.GH_PAT }}
-        
-      
-      run: |
-        echo ${{ secrets.GH_PAT }}
-        echo "GH_PAT: $GH_PAT"
-        git add ./resources/application.yaml
-        git commit -m "Updated manifest file with current commit SHA"
-        git push https://${{ secrets.GH_PAT }}@github.com/YoniKap/projVS.git HEAD:main
-
 
            
