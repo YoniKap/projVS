@@ -65,7 +65,11 @@ jobs:
     - name: Commit and Push Changes
       env:
         GH_PAT: ${{ secrets.GH_PAT }}
+        
+      
       run: |
+        echo ${{ secrets.GH_PAT }}
+        echo "GH_PAT: $GH_PAT"
         git add ./resources/application.yaml
         git commit -m "Updated manifest file with current commit SHA"
         git push https://${{ secrets.GH_PAT }}@github.com/YoniKap/projVS.git HEAD:main
