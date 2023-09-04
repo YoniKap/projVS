@@ -63,6 +63,8 @@ jobs:
       working-directory: ${{ github.workspace }}
 
     - name: Commit and Push Changes
+      env:
+        GH_PAT: ${{ secrets.GH_PAT }}
       run: |
         git add ./resources/application.yaml
         git commit -m "Updated manifest file with current commit SHA"
