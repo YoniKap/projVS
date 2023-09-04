@@ -45,7 +45,8 @@ jobs:
     - name: Get Previous Commit SHA
       id: previous_commit_sha
       run: |
-        PREVIOUS_COMMIT_SHA=$(git rev-parse HEAD^)
+        git fetch --depth=2 origin +refs/heads/main:refs/remotes/origin/main
+        PREVIOUS_COMMIT_SHA=$(git rev-parse origin/main^)
         echo "::set-output name=PREVIOUS_COMMIT_SHA::$PREVIOUS_COMMIT_SHA"
        
 
