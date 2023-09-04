@@ -41,3 +41,17 @@ jobs:
     - name: Push Image Into Repo
       run: docker push yonatankaplounov/application:${{ steps.commit_sha.outputs.SHA_SHORT }}
            && docker push yonatankaplounov/application:latest
+
+    - name: Get Previous Commit SHA
+      id: previous_commit_sha
+      run: |
+        PREVIOUS_COMMIT_SHA=$(git rev-parse HEAD^)
+        echo "::set-output name=PREVIOUS_COMMIT_SHA::$PREVIOUS_COMMIT_SHA"
+       
+
+    - name: Update Manifest File
+      run: |
+        COMMIT_SHA=$(git rev-parse --short HEAD)
+        sed -i "s/latest/$COMMIT_SHA/g" ./resources/application.yaml
+      working-directory: ${{ github.workspace }}
+           
