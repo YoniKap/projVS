@@ -5,6 +5,7 @@ metadata:
   annotations: 
     argocd-image-updater.argoproj.io/image-list: yonatankaplounov/application
     argocd-image-updater.argoproj.io/git-branch: main
+    argocd-image-updater.argoproj.io/image-alias.update-strategy: latest
 spec:
   destination:
     name: ''
@@ -16,13 +17,6 @@ spec:
     targetRevision: HEAD
     helm:
       values: ''
-      parameters:
-        - name: app.imagePullPolicy
-          value: Always
-        - name: app.limits.cpu
-          value: '0.5'
-        - name: appimage.tag
-          value: c9e5064
   project: default
   syncPolicy:
     automated:
