@@ -2,6 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: guitars
+  annotations: 
+    argocd-image-updater.argoproj.io/image-list: yonatankaplounov/application
+    argocd-image-updater.argoproj.io/git-branch: main
 spec:
   destination:
     name: ''
@@ -19,7 +22,7 @@ spec:
         - name: app.limits.cpu
           value: '0.5'
         - name: appimage.tag
-          value: latest
+          value: c9e5064
   project: default
   syncPolicy:
     automated:
