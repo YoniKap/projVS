@@ -55,4 +55,11 @@ jobs:
         COMMIT_SHA=$(git rev-parse --short HEAD)
         sed -i "s/latest/$COMMIT_SHA/g" ./resources/application.yaml
       working-directory: ${{ github.workspace }}
+
+    - name: Commit and Push Changes
+      run: |
+        git add ./resources/application.yaml
+        git commit -m "Updated manifest file with current commit SHA"
+        git push
+
            
