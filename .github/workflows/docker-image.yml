@@ -68,6 +68,6 @@ jobs:
       run: |
         git add ./resources/application.yaml
         git commit -m "Updated manifest file with current commit SHA"
-        git push https://github.com/YoniKap/projVS.git HEAD:main
+        git push https://GH_PAT@github.com/YoniKap/projVS.git HEAD:main
 
            
