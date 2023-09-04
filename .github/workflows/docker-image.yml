@@ -20,6 +20,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt  # Install project dependencies
 
+    - name: Set up Git User Identity
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+    
+
     - name: test-app
       run: python tests.py    
         
