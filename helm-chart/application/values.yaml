@@ -46,7 +46,7 @@ dbservicetype: ClusterIP
 
 dbimage:
    name:  yonatankaplounov/appdatabase
-   tag: final
+   tag: latest
 
 secretName: app-secrets
 
