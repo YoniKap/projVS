@@ -1,6 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `product_catalog` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `product_catalog`;
--- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.34, for Linux (x86_64)
 --
 -- Host: 172.17.0.2    Database: product_catalog
 -- ------------------------------------------------------
@@ -291,7 +289,7 @@ CREATE TABLE `other` (
 
 LOCK TABLES `other` WRITE;
 /*!40000 ALTER TABLE `other` DISABLE KEYS */;
-INSERT INTO `other` VALUES ('#G5A5','Fender','adf123','Capo',50,0),('#G7Y1','Gibson','SlitySlide','Slide',50,0),('#N2J2','Fender','חראדבר ','קקי',23,0),('#T3B1','Fender','FT-100','Tuner',29,1),('#T3B2','Dunlop','G123','Strap',50,1),('#V1A1','Cordoba','GB32','Stand',150,1);
+INSERT INTO `other` VALUES ('#G5A5','Fender','adf123','Capo',50,0),('#G7Y1','Gibson','SlitySlide','Slide',50,0),('#T3B1','Fender','FT-100','Tuner',29,1),('#T3B2','Dunlop','G123','Strap',50,1),('#V1A1','Cordoba','GB32','Stand',150,1);
 /*!40000 ALTER TABLE `other` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -328,4 +326,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-07-27  9:13:28
+-- Dump completed on 2023-09-24 18:42:25
