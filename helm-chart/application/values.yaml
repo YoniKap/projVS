@@ -21,7 +21,7 @@ appservicetype: NodePort
 
 appimage:
    name: yonatankaplounov/application
-   tag: final
+   tag: latest
   
 
 
